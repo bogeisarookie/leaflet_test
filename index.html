@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>leaflet_test</title>
+    <link rel="stylesheet" href="./lib/leaflet/leaflet.css" />
+    <script src="./lib/leaflet/leaflet.js"></script>
+    <script src="./lib/leaflet/leaflet.ChineseTmsProviders.js"></script>
+    <script src="./lib/d3/d3.js"></script>
+    <script src="./lib/leaflet/leaflet_echarts/main.min.js"></script>
+    <style type="text/css">
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
+        </style>
+</head>
+
+<body>
+    <div id='map' style="height:100%" ></div>
+    <div id="svgCirclesContainer" style="float:left; width: 100%; height: 100%;">
+		<svg id="svgCircles" width="1280" height="1280"></svg>
+	</div>
+	<div id="jsonInputFieldContainer" style=" display: none">
+		<textarea id="jsonInputField" type="text" style="/*float:right; width: 100%; height: 100%;*/ display: none;" oninput="doIt()">
+			{
+				"name": "Eve",
+				"uncertainty": 7,
+				"children": [
+				{
+					"name": "合工大南区",
+					"uncertainty": 10,
+					"size": 160,
+					"green_power":70,
+					"lx":117.2954400000,
+					"ly":31.8447100000
+				},
+
+				{
+					"name": "儿童医院",
+					"uncertainty": 3,
+					"size": 60,
+					"green_power":60,
+					"lx":117.2805976868,
+					"ly":31.8273257931
+				},
+				{
+					"name": "Awan",
+					"uncertainty": 3,
+					"children": [
+					{
+						"name": "省立医院",
+						"uncertainty": 5,
+						"size": 160,
+						"green_power":20,
+						"lx":117.2907665539,
+						"ly":31.8576669047
+					},
+					{
+						"name": "包河万达",
+						"uncertainty": 3,
+						"size": 170,
+						"green_power":170,
+						"lx":117.3032569885,
+						"ly":31.8571109687
+					}
+					]
+				},
+				{
+					"name": "中科大东区",
+					"uncertainty": 3,
+					"size": 70,
+					"green_power":60,
+					"lx":117.2695255280,
+					"ly":31.8363680868
+				},
+				{
+					"name": "新亚汽车站",
+					"uncertainty": 3,
+					"size": 70,
+					"green_power":60,
+					"lx":117.3047500000,
+					"ly":31.8802000000
+				},
+				{
+					"name": "安农大",
+					"uncertainty": 3,
+					"size": 170,
+					"green_power":60,
+					"lx":117.2574800000,
+					"ly":31.8627300000
+				},
+				{
+					"name": "红星路小学",
+					"uncertainty": 3,
+					"size": 80,
+					"green_power":60,
+					"lx":117.2917400000,
+					"ly":31.8594600000
+				},
+				{
+					"name": "中科大南区",
+					"uncertainty": 3,
+					"size": 90,
+					"green_power":60,
+					"lx":117.2811100000,
+					"ly":31.8216200000
+				},
+				{
+					"name": "金地国际城",
+					"uncertainty": 3,
+					"size": 70,
+					"green_power":60,
+					"lx":117.3030800000,
+					"ly":31.8375500000
+				}
+
+				]
+			}
+		</textarea>
+	</div>
+<script src="./src/loadMap.js"></script>
+<script src="./src/drawCircle.js"></script>
+</body>
+
+</html>
