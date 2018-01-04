@@ -15,7 +15,7 @@ var root = d3.hierarchy(jsonData)
 var leafNodes = root.descendants().filter(function (candidate) {
     return !candidate.children;
 });
-
+// 转换数据，将叶子节点转换成echarts所需要的格式
 var convertData = function (data) {
     var res = [];
     for (var i = 0; i < data.length; i++) {
@@ -54,7 +54,7 @@ option = {
         map: '',
         label: {
             emphasis: {
-                show: false
+                show: true
             }
         },
         roam: true,
@@ -81,7 +81,7 @@ option = {
                 normal: {
                     formatter: '{b}',
                     position: 'right',
-                    show: false
+                    show: true
                 },
                 emphasis: {
                     show: true
