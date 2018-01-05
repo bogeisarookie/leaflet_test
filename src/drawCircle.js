@@ -86,6 +86,8 @@ option = {
                 emphasis: {
                     show: true
                 }
+
+                
             },
             itemStyle: {
                 normal: {
