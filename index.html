@@ -6,36 +6,47 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>leaflet_test在宿舍的版本2222</title>
+	<!-- 样式表 -->
 	<link rel="stylesheet" href="./lib/leaflet/leaflet.css" />
 	<link rel="stylesheet" href="./lib/bootstrap/bootstrap.min.css">
-	<script src="./lib/leaflet/leaflet.js"></script>
-	<script src="./lib/leaflet/leaflet.ChineseTmsProviders.js"></script>
-	<script src="./lib/d3/d3.js"></script>
-	<script src="./lib/leaflet/leaflet_echarts/main.min.js"></script>
+	<!-- jquery -->
 	<!-- <script src="./lib/jQuery/jquery-1.11.2.min.js"></script> -->
 	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<!-- leaflet -->
+	<script src="./lib/leaflet/leaflet.js"></script>
+	<script src="./lib/leaflet/leaflet.ChineseTmsProviders.js"></script>
+	<script src="./lib/leaflet/leaflet_echarts/main.min.js"></script>
+	<!-- D3——bubble -->
+	<script src="./lib/d3/d3.js"></script>
+	<script src="./lib/bubble/planck.js"></script>
+	<script src="./lib/bubble/liquidFillGauge_aw.js"></script>
+	<script src="./lib/bubble/d3-bubbletreemap.js"></script>
+
+	<!-- bootstrap -->
 	<script src="./lib/bootstrap/bootstrap.min.js"></script>
+	<!-- svg -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js"></script>
 	<style type="text/css">
 		body {
 			padding: 0;
 			margin: 0;
 		}
-
-		html,
+		a{text-decoration:none}
+		/* html,
 		body,
 		#map,#container,.container,.row{
 			height: 100%;
-		}
+		} */
 	</style>
 </head>
 
 <body style="height:100%">
-	<div id="container" >
-		<div class="container">
+	<div id="container">
+		<div class="container-fluid">
 			<div class="row" >
 				<!-- 第一列为泡泡图展示 -->
-				<div class="col-md-6">
-							<textarea id="jsonInputField" type="text" style="float:right; width: 100%; height: 100%; display: block;">
+				<div class="col-md-5 col-xs-5" >
+					<textarea id="jsonInputField" type="text" style="display: none;">
 								{
 									"name": "Eve",
 									"uncertainty": 7,
@@ -73,7 +84,7 @@
 											"name": "包河万达",
 											"uncertainty": 3,
 											"size": 170,
-											"green_power":170,
+											"green_power":70,
 											"lx":117.3032569885,
 											"ly":31.8571109687
 										}
@@ -131,11 +142,14 @@
 									]
 								}
 							</textarea>
+					<div id="svgCirclesContainer" style="height: 800px;">
+						<svg id="svgCircles" width="100%" height="100%"></svg>
+					</div>
 
 				</div>
 				<!-- 第二列为地图展示 -->
-				<div class="col-md-6">
-					<div id='map' style="height:100%"></div>
+				<div class="col-md-7 col-xs-7">
+					<div id='map' style="height:800px"></div>
 				</div>
 			</div>
 		</div>
@@ -145,6 +159,7 @@
 
 	<script src="./src/loadMap.js"></script>
 	<script src="./src/drawCircle.js"></script>
+	<script src="./src/drawBubble.js"></script>
 </body>
 
 </html>

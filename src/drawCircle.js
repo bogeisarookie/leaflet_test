@@ -62,6 +62,7 @@ option = {
             normal: {
                 areaColor: '#323c48',
                 borderColor: '#111'
+                
             },
             emphasis: {
                 areaColor: '#2a333d'
