@@ -1,5 +1,6 @@
 //加载泡泡图
 var leafNodes;
+var currentLatLng;
 function init() {
     let jsonData = undefined;
     try {
@@ -22,7 +23,7 @@ function init() {
 }
 function drawChart(data, svg, padding, curvature) {
     let root = d3.hierarchy(data)
-        .sum(function (d) { return d.size / 2; })//计算每个节点的值，该值包括他自己和他后代的值。
+        .sum(function (d) { return d.size / 2.5; })//计算每个节点的值，该值包括他自己和他后代的值。
         .sort(function (a, b) { return b.value - a.value; });//从大到小排序
     let renderedSVGSize = svg.node().getBoundingClientRect();//用于获取某个元素相对于视窗的位置集合。集合中有top, right, bottom, left等属性。
 
@@ -38,7 +39,7 @@ function drawChart(data, svg, padding, curvature) {
 
     // Do layout and coloring.
     let hierarchyRoot = bubbletreemap.doLayout().doColoring().hierarchyRoot();
-     leafNodes = hierarchyRoot.descendants().filter(function (candidate) {
+    leafNodes = hierarchyRoot.descendants().filter(function (candidate) {
         return !candidate.children;
     });
     // Draw contour.
@@ -68,8 +69,8 @@ function drawChart(data, svg, padding, curvature) {
         .data(leafNodes)
         .enter().append("a").attr("href", "javascript:void(0)")
         .style("text-decoration", "none")
-        .style("cursor","pointer")
-        .attr("onclick", function(d){return "clickBubble("+d.data.name+")";});
+        .style("cursor", "pointer")
+        .attr("onclick", function (d) { return "clickBubble(" + d.data.name + ")"; });
 
     //在每个a标签里面添加g 标签
     circleGroup_a.append("g").attr("class", "circle_single");
@@ -137,7 +138,7 @@ function drawChart(data, svg, padding, curvature) {
     //     .text(function (d) { return d.data.name; });
 }
 
-function clickBubble(d){
+function clickBubble(d) {
     //alert(d.id);
     let jsonData = undefined;
     let currentNode;
@@ -146,15 +147,23 @@ function clickBubble(d){
     } catch (e) { }
 
     if (jsonData) {
-        for(var i=0;i<leafNodes.length;i++){
-            if(leafNodes[i].data.name==d.id)
-            currentNode=leafNodes[i];
+        for (var i = 0; i < leafNodes.length; i++) {
+            if (leafNodes[i].data.name == d.id)
+                currentNode = leafNodes[i];
         }
     }
     //node.data...
-    var currentLatLng=L.latLng(currentNode.data.ly,currentNode.data.lx);
+    currentLatLng = L.latLng(currentNode.data.ly, currentNode.data.lx);
 
-    map.setView(currentLatLng,16);
+    map.setView(currentLatLng, 16);
+    //定义一个全局变量的marker
+    markLayer = L.marker(currentLatLng, { icon: L.AwesomeMarkers.icon({ icon: 'flash', prefix: 'fa', markerColor: 'blue' }) }).bindPopup("hello!").addTo(map);
+    console.log(currentLatLng);
+    markLayer.on("click",function(e){
+       initDetailMap(currentLatLng,currentNode);
+    })
+  
+   
 
 }
 

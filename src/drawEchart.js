@@ -45,7 +45,7 @@ option = {
         orient: 'vertical',
         y: 'bottom',
         x: 'left',
-        data: ['pm2.5'],
+        data: ['电力容量'],
         textStyle: {
             color: '#fff'
         }
@@ -71,7 +71,7 @@ option = {
     },
     series: [
         {
-            name: 'pm2.5',
+            name: '电力容量',
             type: 'scatter',
             coordinateSystem: 'geo',
             data: convertData(leafNodes),
@@ -102,7 +102,7 @@ option = {
             coordinateSystem: 'geo',
             data: convertData(leafNodes.sort(function (a, b) {
                 return b.data.size - a.data.size;
-            }).slice(0, 6)),
+            }).slice(0, 20)),
             symbolSize: function (val) {
                 return val[2] / 10;
             },
@@ -125,7 +125,7 @@ option = {
                     shadowColor: '#333'
                 }
             },
-            zlevel: 1
+            zlevel: 3
         }
     ]
 };
