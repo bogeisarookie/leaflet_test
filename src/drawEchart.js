@@ -1,133 +1,181 @@
-// 绘制泡泡图用于叠加到地图
+//绘制echarts图表
 
-var overlay = new L.echartsLayer3(map, echarts);
-var chartsContainer = overlay.getEchartsContainer();
-var myChart = overlay.initECharts(chartsContainer);
-
-
-var jsonData = undefined;
-try {
-    jsonData = JSON.parse(document.getElementById("jsonInputField").value);
-} catch (e) { }
-var root = d3.hierarchy(jsonData)
-    .sum(function (d) { return d.size; })//计算每个节点的值，该值包括他自己和他后代的值。
-    .sort(function (a, b) { return b.size - a.size; });//从大到小排序
-var leafNodes = root.descendants().filter(function (candidate) {
-    return !candidate.children;
-});
-// 转换数据，将叶子节点转换成echarts所需要的格式
-var convertData = function (data) {
-    var res = [];
-    for (var i = 0; i < data.length; i++) {
-        var coor_value = [data[i].data.lx, data[i].data.ly];
-        res.push({
-            name: data[i].data.name,
-            value: coor_value.concat(data[i].data.size)
-        });
-    }
-    return res;
-};
-
-option = {
-    // backgroundColor: '#404a59',
+//绘制总体态势图表
+var allStation_Chart = echarts.init(document.getElementById('chart_allstation'));
+var sunburst_Chart=echarts.init(document.getElementById('sunburst'));
+//使用echarts绘制线路详细视图
+var line_Chart=echarts.init(document.getElementById('lineDetailChart'));
+var option_sunburst={
+    
+}
+var option_linechart = {
     title: {
-        text: '2017合肥市电力数据',
-        subtext: 'Data from PM25.in,Develop By WanderGIS',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
+        text: '一周负荷变化',
+        subtext: '测试数据'
     },
     tooltip: {
-        trigger: 'item'
+        trigger: 'axis'
     },
     legend: {
-        orient: 'vertical',
-        y: 'bottom',
-        x: 'left',
-        data: ['电力容量'],
-        textStyle: {
-            color: '#fff'
+        data:['最高负荷','最低负荷']
+    },
+    toolbox: {
+        show: true,
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar']},
+            restore: {},
+            saveAsImage: {}
         }
     },
-    geo: {
-        map: '',
-        label: {
-            emphasis: {
-                show: true
-            }
-        },
-        roam: true,
-        itemStyle: {
-            normal: {
-                areaColor: '#323c48',
-                borderColor: '#111'
-                
-            },
-            emphasis: {
-                areaColor: '#2a333d'
-            }
+    xAxis:  {
+        type: 'category',
+        boundaryGap: false,
+        data: ['周一','周二','周三','周四','周五','周六','周日']
+    },
+    yAxis: {
+        type: 'value',
+        axisLabel: {
+            formatter: '{value} %'
         }
     },
     series: [
         {
-            name: '电力容量',
-            type: 'scatter',
-            coordinateSystem: 'geo',
-            data: convertData(leafNodes),
-            symbolSize: function (val) {
-                return val[2] / 10;
+            name:'最高负荷',
+            type:'line',
+            data:[11, 11, 15, 13, 12, 13, 10],
+            markPoint: {
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
             },
-            label: {
-                normal: {
-                    formatter: '{b}',
-                    position: 'right',
-                    show: true
-                },
-                emphasis: {
-                    show: true
-                }
-
-                
-            },
-            itemStyle: {
-                normal: {
-                    color: '#ddb926'
-                }
+            markLine: {
+                data: [
+                    {type: 'average', name: '平均值'}
+                ]
             }
         },
         {
-            name: 'Top 5',
-            type: 'effectScatter',
-            coordinateSystem: 'geo',
-            data: convertData(leafNodes.sort(function (a, b) {
-                return b.data.size - a.data.size;
-            }).slice(0, 20)),
-            symbolSize: function (val) {
-                return val[2] / 10;
+            name:'最低负荷',
+            type:'line',
+            data:[1, -2, 2, 5, 3, 2, 0],
+            markPoint: {
+                data: [
+                    {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                ]
             },
-            showEffectOn: 'render',
-            rippleEffect: {
-                brushType: 'stroke'
-            },
-            hoverAnimation: true,
-            label: {
-                normal: {
-                    formatter: '{b}',
-                    position: 'right',
-                    show: true
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: '#f4e925',
-                    shadowBlur: 10,
-                    shadowColor: '#333'
-                }
-            },
-            zlevel: 3
+            markLine: {
+                data: [
+                    {type: 'average', name: '平均值'},
+                    [{
+                        symbol: 'none',
+                        x: '90%',
+                        yAxis: 'max'
+                    }, {
+                        symbol: 'circle',
+                        label: {
+                            normal: {
+                                position: 'start',
+                                formatter: '最大值'
+                            }
+                        },
+                        type: 'max',
+                        name: '最高点'
+                    }]
+                ]
+            }
         }
     ]
 };
-// 使用刚指定的配置项和数据显示图表。
-overlay.setOption(option);
+var option_allStation = {
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    legend: {
+        data: ['工厂用电', '学校用电','商业用电','交通用电','光伏发电']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis:  {
+        type: 'value'
+    },
+    yAxis: {
+        type: 'category',
+        data: ['周一','周二','周三','周四','周五','周六','周日']
+    },
+    series: [
+        {
+            name: '工厂用电',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [320, 302, 301, 334, 390, 330, 320]
+        },
+        {
+            name: '学校用电',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name: '商业用电',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [220, 182, 191, 234, 290, 330, 310]
+        },
+        {
+            name: '交通用电',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [150, 212, 201, 154, 190, 330, 410]
+        },
+        {
+            name: '光伏发电',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [820, 832, 901, 934, 1290, 1330, 1320]
+        }
+    ]
+};
+allStation_Chart.setOption(option_allStation);
+line_Chart.setOption(option_linechart);

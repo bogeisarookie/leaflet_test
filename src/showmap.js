@@ -1,5 +1,6 @@
 //显示变电站详细信息
-function initDetailMap(currentLatLng, currentNode) {
+var detailmap;
+function initDetailMap(currentLatLng) {
     var normalm1 = L.tileLayer.chinaProvider('Geoq.Normal.Map', {
         maxZoom: 18,
         minZoom: 5
@@ -36,7 +37,7 @@ function initDetailMap(currentLatLng, currentNode) {
         "冷色": normalm6
     }
     
-    var detailmap = L.map("mapdetail", {
+     detailmap = L.map("mapdetail", {
         center: currentLatLng,
         zoom: 14,
         layers: [normalm1],
@@ -51,14 +52,10 @@ function initDetailMap(currentLatLng, currentNode) {
     // location.reload();
     //修改标题
 
-    $("#showmapHeader>p").text(currentNode.data.name + "变电站详细信息");
-    addMarker(currentLatLng, currentNode, detailmap);
-}
-function addMarker(currentLatLng, currentNode, detailmap) {
-    var markLayer = L.marker(currentLatLng, { icon: L.AwesomeMarkers.icon({ icon: 'flash', prefix: 'fa', markerColor: 'blue' }) }).bindPopup(currentNode.data.name).openPopup().addTo(detailmap);
 
 }
-function closeDetailMap(){
-    $("#showmap").hide();
-    $("#map").show();
+function addMarker(currentLatLng, name, detailmap) {
+    var markLayer = L.marker(currentLatLng, { icon: L.AwesomeMarkers.icon({ icon: 'flash', prefix: 'fa', markerColor: 'blue' }) }).bindPopup(name).addTo(detailmap);
+    markLayer.openPopup();
 }
+

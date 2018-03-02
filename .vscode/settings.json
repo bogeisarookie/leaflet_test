@@ -1,0 +1,8 @@
+{
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 80,
+    "workbench.iconTheme": "vs-seti",
+    "workbench.colorTheme": "Atom One Dark",
+    "fileheader.Author": "张海波",
+    "eslint.enable": false
+}

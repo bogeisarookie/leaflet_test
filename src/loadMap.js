@@ -1,3 +1,9 @@
+/*
+ * @Author: mikey.zhaopeng 
+ * @Date: 2018-01-17 10:29:35 
+ * @Last Modified by:   mikey.zhaopeng 
+ * @Last Modified time: 2018-01-17 10:29:35 
+ */
 //加载地图
 var map = L.map('map');
 var baseLayers = {

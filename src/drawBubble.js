@@ -1,11 +1,20 @@
+/*
+ * @Author: 张海波 
+ * @Date: 2018-01-17 10:38:47 
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2018-01-17 11:03:49
+ */
+
+
+
 //加载泡泡图
 var leafNodes;
-var currentLatLng;
+
 function init() {
     let jsonData = undefined;
     try {
         jsonData = JSON.parse(document.getElementById("jsonInputField").value);
-    } catch (e) { }
+    } catch (e) {}
 
     if (jsonData) {
 
@@ -21,11 +30,16 @@ function init() {
 
     }
 }
+
 function drawChart(data, svg, padding, curvature) {
     let root = d3.hierarchy(data)
-        .sum(function (d) { return d.size / 2.5; })//计算每个节点的值，该值包括他自己和他后代的值。
-        .sort(function (a, b) { return b.value - a.value; });//从大到小排序
-    let renderedSVGSize = svg.node().getBoundingClientRect();//用于获取某个元素相对于视窗的位置集合。集合中有top, right, bottom, left等属性。
+        .sum(function (d) {
+            return d.size / 2.5;
+        }) //计算每个节点的值，该值包括他自己和他后代的值。
+        .sort(function (a, b) {
+            return b.value - a.value;
+        }); //从大到小排序
+    let renderedSVGSize = svg.node().getBoundingClientRect(); //用于获取某个元素相对于视窗的位置集合。集合中有top, right, bottom, left等属性。
 
     // Create bubbletreemap.
     let bubbletreemap = d3.bubbletreemap()
@@ -56,8 +70,12 @@ function drawChart(data, svg, padding, curvature) {
             return arc.d;
         })
         .style("stroke", "black")
-        .style("stroke-width", function (arc) { return arc.strokeWidth; })
-        .attr("transform", function (arc) { return arc.transform; });
+        .style("stroke-width", function (arc) {
+            return arc.strokeWidth;
+        })
+        .attr("transform", function (arc) {
+            return arc.transform;
+        });
     // console.log("contourGroup的path");
     // console.log(contourGroup);
 
@@ -70,30 +88,52 @@ function drawChart(data, svg, padding, curvature) {
         .enter().append("a").attr("href", "javascript:void(0)")
         .style("text-decoration", "none")
         .style("cursor", "pointer")
-        .attr("onclick", function (d) { return "clickBubble(" + d.data.name + ")"; });
+        .attr("onclick", function (d) {
+            return "clickBubble(" + d.data.name + ")";
+        });
 
     //在每个a标签里面添加g 标签
     circleGroup_a.append("g").attr("class", "circle_single");
     //再在g标签里面添加circle
     circleGroup_a.append("circle")
         .attr("class", "circle")
-        .attr("r", function (d) { return d.r; })
-        .attr("cx", function (d) { return d.x; })
-        .attr("cy", function (d) { return d.y; })
-        .attr("id", function (d) { return d.data.name; })
-        .attr("size", function (d) { return d.data.size; })
-        .style("title", function (d) { return d.data.name })
+        .attr("r", function (d) {
+            return d.r;
+        })
+        .attr("cx", function (d) {
+            return d.x;
+        })
+        .attr("cy", function (d) {
+            return d.y;
+        })
+        .attr("id", function (d) {
+            return d.data.name;
+        })
+        .attr("size", function (d) {
+            return d.data.size;
+        })
+        .style("title", function (d) {
+            return d.data.name
+        })
         .style("fill", "#FFFFFF")
         .style("stroke", "black")
-        .style("height", function (d) { return 2 * d.r; })
-        .style("width", function (d) { return 2 * d.r; })
+        .style("height", function (d) {
+            return 2 * d.r;
+        })
+        .style("width", function (d) {
+            return 2 * d.r;
+        })
         .style("stroke-width", "2");
 
     //添加title
     circleGroup_a.append("title")
-        .text(function (d) { return d.data.name; });
+        .text(function (d) {
+            return d.data.name;
+        });
     //添加水球图样式
-    circleGroup_a.attr("id", function (d) { return d.data.name + '_g'; })
+    circleGroup_a.attr("id", function (d) {
+            return d.data.name + '_g';
+        })
         .each(function (d, i) {
             var config = liquidFillGaugeDefaultSettings();
             config.circleColor = d.color;
@@ -102,11 +142,11 @@ function drawChart(data, svg, padding, curvature) {
             config.waveColor = d.color;
             config.circleThickness = 0.03;
             // config.textVertPosition = 0.8;//波形中显示百分比文本的高度。 0 =底部，1 =顶部。
-            config.waveAnimateTime = 1000;//全波进入波浪的时间量（以毫秒为单位）。
-            config.waveHeight = 0.10;//波高作为波浪半径的百分比。
+            config.waveAnimateTime = 1000; //全波进入波浪的时间量（以毫秒为单位）。
+            config.waveHeight = 0.10; //波高作为波浪半径的百分比。
             // config.waveAnimate = false;//控制波形是滚动还是静止。
             // config.waveOffset = 0.25;//最初抵消波浪的金额。 0 =没有偏移。 1 =一个全波的偏移。
-            config.valueCountUp = false;//如果为true，则显示的值从0加载到加载时的最终值。 如果为false，则显示最终值。
+            config.valueCountUp = false; //如果为true，则显示的值从0加载到加载时的最终值。 如果为false，则显示最终值。
             // config.displayPercent = false;//如果为true，则在该值之后显示％符号。
             loadLiquidFillGauge(d.data.name + '_g', d.data.green_power, d, config);
 
@@ -127,7 +167,9 @@ function drawChart(data, svg, padding, curvature) {
             }
             return arc_obj.d;
         })
-        .attr("transform", function (arc) { return "translate(" + arc.x + "," + arc.y + ")"; })
+        .attr("transform", function (arc) {
+            return "translate(" + arc.x + "," + arc.y + ")";
+        })
         .attr("fill", "rgb(152, 223, 138)");
 
 
@@ -144,7 +186,7 @@ function clickBubble(d) {
     let currentNode;
     try {
         jsonData = JSON.parse(document.getElementById("jsonInputField").value);
-    } catch (e) { }
+    } catch (e) {}
 
     if (jsonData) {
         for (var i = 0; i < leafNodes.length; i++) {
@@ -157,15 +199,19 @@ function clickBubble(d) {
 
     map.setView(currentLatLng, 16);
     //定义一个全局变量的marker
-    markLayer = L.marker(currentLatLng, { icon: L.AwesomeMarkers.icon({ icon: 'flash', prefix: 'fa', markerColor: 'blue' }) }).bindPopup("hello!").addTo(map);
-    console.log(currentLatLng);
-    markLayer.on("click",function(e){
-       initDetailMap(currentLatLng,currentNode);
+    markLayer = L.marker(currentLatLng, {
+        icon: L.AwesomeMarkers.icon({
+            icon: 'flash',
+            prefix: 'fa',
+            markerColor: 'blue'
+        })
+    }).bindPopup(function () {}).addTo(map);
+    markLayer.on("click", function (e) {
+        initDetailMap(currentLatLng, currentNode);
     })
-  
-   
+
+
 
 }
 
 init();
-
