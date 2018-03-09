@@ -25,9 +25,15 @@ for (var i = 0; i < leafNodes.length; i++) {
     });
 
     marker.on("click", function (e) {
+        console.log(e.latlng);
         if (!detailmap) {
             initDetailMap(e.latlng);
         }
+        detailmap.on("click",function (e) { 
+            console.log("点击了！"+e.latlng);
+         });
+
+        
         detailmap.setView(e.latlng);
         $("#showMapPanel>div>h3").text(e.target.options.title + "变电站详细信息");
         addMarker(e.latlng, e.target.options.title, detailmap);

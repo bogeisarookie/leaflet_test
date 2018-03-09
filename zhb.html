@@ -16,34 +16,40 @@
 	<!-- jquery -->
 	<script src="./lib/jQuery/jquery-1.11.2.min.js"></script>
 	<!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+	<!-- d3 -->
+	<script src="./lib/d3/d3.js"></script>
 	<!-- leaflet -->
 	<script src="./lib/leaflet/leaflet.js"></script>
 	<script src="./lib/leaflet/leaflet.ChineseTmsProviders.js"></script>
 	<script src="./lib/leaflet/leaflet.awesome-markers.js"></script>
 	<script src="./lib/leaflet/leaflet.markercluster-src.js"></script>
+	<script src="./lib/leaflet/CanvasFlowmapLayer.js"></script>
 	<!-- echarts这个有冲突 -->
 	<!-- <script src="./lib/leaflet/leaflet_echarts/main.min.js"></script> -->
 	<!-- echarts -->
 	<script src="./lib/echarts/echarts.js"></script>
 	<!-- D3——bubble -->
-	<script src="./lib/d3/d3.js"></script>
+
 	<script src="./lib/bubble/planck.js"></script>
 	<script src="./lib/bubble/liquidFillGauge_aw.js"></script>
 	<script src="./lib/bubble/d3-bubbletreemap.js"></script>
+	<script src="./lib/leaflet/L.D3SvgOverlay.js"></script>
 	<!-- bootstrap -->
 	<script src="./lib/bootstrap/bootstrap.min.js"></script>
 	<!-- data -->
-	<script src="./data/data_source.json"></script>
+	<!-- <script src="./data/data_source.json"></script> -->
 	<style type="text/css">
 		body {
 			padding: 0;
 			margin: 0;
 		}
+
 		/* html,
 		body,
 		#map,#container,.container,.row{
 			height: 100%;
 		} */
+
 	</style>
 </head>
 
@@ -90,7 +96,9 @@
 							<h3 class="panel-title">变电站位置信息</h3>
 						</div>
 						<div class="panel-body">
-							<div id="mapdetail" style="height:650px;width:100%"></div>
+							<div id="mapdetail" style="height:650px;width:100%">
+
+							</div>
 						</div>
 					</div>
 				</div>
@@ -111,34 +119,34 @@
 
 
 				</div>
-				
+
 				<div id="" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-					
+
 					<div class="panel panel-info">
-						  <div class="panel-heading">
-								<h3 class="panel-title">Panel title</h3>
-						  </div>
-						  <div class="panel-body">
-								Panel content
-						  </div>
+						<div class="panel-heading">
+							<h3 class="panel-title">Panel title</h3>
+						</div>
+						<div class="panel-body">
+							Panel content
+						</div>
 					</div>
-					
+
 				</div>
-				
-				<div id="lineDetail" class="col-xs-4 col-sm-4 col-md-4 col-lg-4" >
-					
+
+				<div id="lineDetail" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+
 					<div class="panel panel-info">
-						  <div class="panel-heading">
-								<h3 class="panel-title">XXX线路详细情况</h3>
-						  </div>
-						  <div class="panel-body">
-								<div id="lineDetailChart" style="height:300px;width:100%"></div>
-						  </div>
+						<div class="panel-heading">
+							<h3 class="panel-title">XXX线路详细情况</h3>
+						</div>
+						<div class="panel-body">
+							<div id="lineDetailChart" style="height:300px;width:100%"></div>
+						</div>
 					</div>
-					
+
 				</div>
-				
-				
+
+
 
 
 

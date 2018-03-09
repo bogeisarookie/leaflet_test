@@ -39,7 +39,7 @@ function initDetailMap(currentLatLng) {
     
      detailmap = L.map("mapdetail", {
         center: currentLatLng,
-        zoom: 14,
+        zoom: 16,
         layers: [normalm1],
         zoomControl: false
     });
@@ -51,7 +51,7 @@ function initDetailMap(currentLatLng) {
     }).addTo(detailmap);
     // location.reload();
     //修改标题
-
+    
 
 }
 function addMarker(currentLatLng, name, detailmap) {
