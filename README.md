@@ -6,4 +6,4 @@
 然后在当前目录使用命令<br>
 `http-server`即可启动服务器，打开本地8080端口地址之后选则zhb.html即可
 ## 效果图
-！[1](https://github.com/bogeisarookie/leaflet_test/tree/master/images/test1.png)
+![结果图](https://github.com/bogeisarookie/leaflet_test/tree/master/images/test.png)
