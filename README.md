@@ -1,5 +1,6 @@
 # leaflet_test
 使用leaflet结合echarts进行电力数据展示<br>
+目的是熟悉leaflet,结合D3.js做可视化
 ## 操作说明
 首先安装http-server<br>
 `npm install http-server -g`<br>
